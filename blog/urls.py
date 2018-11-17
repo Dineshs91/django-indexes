@@ -4,5 +4,5 @@ from blog.views import BlogView
 
 
 urlpatterns = [
-    path("blogs/", BlogView.as_view())
+    path("blogs/<int:blog_id>/", BlogView.as_view())
 ]

@@ -1,5 +1,6 @@
 import json
 
+import sqlparse
 from django.db import connection
 from django.conf import settings
 from rest_framework.response import Response
@@ -42,4 +43,18 @@ class IndexMiddleware:
 
     @staticmethod
     def analyze_sql_queries(sql_queries):
-        print(sql_queries)
+        for sql_query in sql_queries:
+            parsed = sqlparse.parse(sql_query)
+            stmt = parsed[0]
+
+            end_clause = stmt.tokens[-1]
+            if end_clause.startswith(".WHERE"):
+                table_name = ""
+
+    @staticmethod
+    def _is_select_statement(sql_query):
+        pass
+
+    @staticmethod
+    def _get_table_name(sql_query):
+        pass
