@@ -15,6 +15,8 @@ High cardinality example: email, address, phonenumber
 
 `python setup.py`
 
+Add `django_indexes.middleware.IndexMiddleware` to the middleware in `settings.py`, ideally at the bottom.
+
 ## Support
 
 Currently this package supports Django>2.0. But with some small changes can be made to support older
