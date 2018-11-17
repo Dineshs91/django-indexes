@@ -1,11 +1,17 @@
 # django-indexes
 
-Parses the code and suggests the index to be added.
+This package suggests indexes that can be added, by analysing the queries by intercepting requests.
 
-This will be part of the unit tests.
+By default django adds indexes for primary fields, foreign fields and if a field is unique.
+Also the package ignores boolean fields, as this field has a cardinality of 2 (True/False). So
+improvement can be gained by adding an index on such fields.
 
-## Types of sql filters
+## Install
 
-The `where` clause
+`python setup.py`
 
+## Demo
 
+`docker-compose up -d`
+
+Make some requests from postman, by creating the blog and its posts.
