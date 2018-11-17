@@ -13,7 +13,7 @@ High cardinality example: email, address, phonenumber
 
 ## Install
 
-`python setup.py`
+`python setup.py install`
 
 ## Usage
 
