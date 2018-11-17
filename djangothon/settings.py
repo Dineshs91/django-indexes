@@ -44,7 +44,8 @@ OTHER_APPS = [
 ]
 
 CUSTOM_APPS = [
-    'blog'
+    'blog',
+    'stats'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + OTHER_APPS + CUSTOM_APPS

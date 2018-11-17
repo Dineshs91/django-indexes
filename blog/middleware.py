@@ -1,6 +1,8 @@
+import os
 import re
 import json
 
+import redis
 import sqlparse
 from django.db import connection
 from django.conf import settings
@@ -10,6 +12,8 @@ from rest_framework.response import Response
 class IndexMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
+        redis_host = os.environ.get("REDIS_HOST", "localhost")
+        self.r = redis.Redis(host=redis_host, port=6379, db=0)
 
     def __call__(self, request):
         response = self.get_response(request)
@@ -19,15 +23,6 @@ class IndexMiddleware:
 
         sql_queries = self.gather_sql_queries()
         self.analyze_sql_queries(sql_queries)
-
-        if isinstance(response, Response) and hasattr(response, "data"):
-            try:
-                response.data["metrics"] = {
-                    "indexes": "sample index"
-                }
-                response.content = json.dumps(response.data)
-            except TypeError:
-                return response
 
         return response
 
@@ -66,7 +61,24 @@ class IndexMiddleware:
                 table_name = self._get_table_name(tokens)
                 filter_columns = self._get_columns(end_clause, table_name)
 
-                print(filter_columns)
+                key = sql_query
+
+                value = self.r.get(key)
+                if value is None:
+                    self.r.lpush("indexes", key)
+                    self.r.set(key, json.dumps({
+                        "table": table_name,
+                        "columns": filter_columns,
+                        "count": 1
+                    }))
+                else:
+                    value = json.loads(value)
+                    print(value)
+                    self.r.set(key, json.dumps({
+                        "table": value.get("table"),
+                        "columns": value.get("columns"),
+                        "count": value.get("count") + 1
+                    }))
 
     @staticmethod
     def _get_table_name(tokens):
@@ -77,6 +89,6 @@ class IndexMiddleware:
     @staticmethod
     def _get_columns(filter_clause, table_name):
         print(filter_clause, table_name)
-        m = re.findall(r"{}\.[a-zA-Z_]+".format(table_name), filter_clause)
+        m = re.findall(r"{}\.([a-zA-Z_]+)".format(table_name), filter_clause)
 
         return m

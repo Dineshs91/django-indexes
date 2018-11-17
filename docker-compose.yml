@@ -20,6 +20,12 @@ services:
       - POSTGRES_USER=blog-user
       - POSTGRES_DB=blog
       - POSTGRES_PASSWORD=test@123
+      - REDIS_HOST=redis
+
+  redis:
+    image: redis
+
+
 
   db:
     image: postgres:9.6
