@@ -6,6 +6,9 @@ By default django adds indexes for primary fields, foreign fields and if a field
 Also the package ignores boolean fields, as this field has a cardinality of 2 (True/False). So
 improvement can be gained by adding an index on such fields.
 
+Low cardinality example: pincode, city
+High cardinality example: email, address, phonenumber 
+
 ## Install
 
 `python setup.py`
