@@ -1,3 +1,4 @@
+import re
 import json
 
 import sqlparse
@@ -65,6 +66,8 @@ class IndexMiddleware:
                 table_name = self._get_table_name(tokens)
                 filter_columns = self._get_columns(end_clause, table_name)
 
+                print(filter_columns)
+
     @staticmethod
     def _get_table_name(tokens):
         for index, token in enumerate(tokens):
@@ -74,3 +77,6 @@ class IndexMiddleware:
     @staticmethod
     def _get_columns(filter_clause, table_name):
         print(filter_clause, table_name)
+        m = re.findall(r"{}\.[a-zA-Z_]+".format(table_name), filter_clause)
+
+        return m
