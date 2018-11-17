@@ -41,20 +41,36 @@ class IndexMiddleware:
 
         return sql_queries
 
-    @staticmethod
-    def analyze_sql_queries(sql_queries):
+    def analyze_sql_queries(self, sql_queries):
         for sql_query in sql_queries:
             parsed = sqlparse.parse(sql_query)
             stmt = parsed[0]
 
-            end_clause = stmt.tokens[-1]
-            if end_clause.startswith(".WHERE"):
-                table_name = ""
+            tokens = []
+
+            # Strip whitespaces from tokens.
+            for token in stmt.tokens:
+                if str(token) == " ":
+                    continue
+                else:
+                    tokens.append(str(token))
+
+            start_clause = tokens[0]
+            end_clause = tokens[-1]
+
+            if not start_clause.startswith("SELECT"):
+                continue
+
+            if end_clause.startswith("WHERE"):
+                table_name = self._get_table_name(tokens)
+                filter_columns = self._get_columns(end_clause, table_name)
 
     @staticmethod
-    def _is_select_statement(sql_query):
-        pass
+    def _get_table_name(tokens):
+        for index, token in enumerate(tokens):
+            if token.startswith("FROM"):
+                return tokens[index+1]
 
     @staticmethod
-    def _get_table_name(sql_query):
-        pass
+    def _get_columns(filter_clause, table_name):
+        print(filter_clause, table_name)
