@@ -15,6 +15,11 @@ High cardinality example: email, address, phonenumber
 
 `python setup.py`
 
+## Support
+
+Currently this package supports Django>2.0. But with some small changes can be made to support older
+versions as well.
+
 ## Demo
 
 `docker-compose up -d`
