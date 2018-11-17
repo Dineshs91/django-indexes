@@ -8,6 +8,8 @@ from django.db import connection
 from django.conf import settings
 from rest_framework.response import Response
 
+from utils.common import IndexConstraints
+
 
 class IndexMiddleware:
     def __init__(self, get_response):
@@ -61,6 +63,8 @@ class IndexMiddleware:
                 table_name = self._get_table_name(tokens)
                 filter_columns = self._get_columns(end_clause, table_name)
 
+                valid_columns = self._get_valid_columns_for_index(table_name, filter_columns)
+
                 key = sql_query
 
                 value = self.r.get(key)
@@ -68,17 +72,25 @@ class IndexMiddleware:
                     self.r.lpush("indexes", key)
                     self.r.set(key, json.dumps({
                         "table": table_name,
-                        "columns": filter_columns,
+                        "columns": valid_columns,
                         "count": 1
                     }))
                 else:
                     value = json.loads(value)
-                    print(value)
                     self.r.set(key, json.dumps({
                         "table": value.get("table"),
                         "columns": value.get("columns"),
                         "count": value.get("count") + 1
                     }))
+
+    @staticmethod
+    def _get_valid_columns_for_index(table, columns):
+        valid_columns = []
+        for column in columns:
+            if IndexConstraints().is_valid_index(table, column):
+                valid_columns.append(column)
+
+        return valid_columns
 
     @staticmethod
     def _get_table_name(tokens):
@@ -88,7 +100,6 @@ class IndexMiddleware:
 
     @staticmethod
     def _get_columns(filter_clause, table_name):
-        print(filter_clause, table_name)
         m = re.findall(r"{}\.([a-zA-Z_]+)".format(table_name), filter_clause)
 
         return m
