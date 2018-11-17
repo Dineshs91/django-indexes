@@ -15,7 +15,23 @@ High cardinality example: email, address, phonenumber
 
 `python setup.py`
 
+## Usage
+
+This will work only when `DEBUG=True`
+
 Add `django_indexes.middleware.IndexMiddleware` to the middleware in `settings.py`, ideally at the bottom.
+
+You can also add this to your tests.
+
+```python
+@override_settings(MIDDLEWARE=[
+    'django_indexes.middleware.IndexMiddleware'
+], DEBUG=True)
+def test_user_login(self):
+    pass
+```
+
+This will work only with `APIClient`
 
 ## Support
 
