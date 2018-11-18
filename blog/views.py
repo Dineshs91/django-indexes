@@ -34,6 +34,17 @@ class BlogDetailView(APIView):
         return create_response(data=serializer.data, status=status.HTTP_200_OK)
 
 
+class BlogPostView(APIView):
+    def get(self, request, site):
+        post = Post.objects.filter(blog__site=site)
+
+        if not post:
+            return create_response(error={"message": "Post not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = PostSerializer(post, many=True)
+        return create_response(data=serializer.data, status=status.HTTP_200_OK)
+
+
 class BlogSiteView(APIView):
     def get(self, request, site):
         try:
