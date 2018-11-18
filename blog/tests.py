@@ -55,6 +55,15 @@ class BlogTest(TestCase):
     @override_settings(MIDDLEWARE=[
         'core.middleware.IndexMiddleware'
     ], DEBUG=True)
+    def test_get_blog_by_site(self):
+        blog_site = "sample.com"
+
+        response = self.client.get('/api/blogs/{}/'.format(blog_site), format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    @override_settings(MIDDLEWARE=[
+        'core.middleware.IndexMiddleware'
+    ], DEBUG=True)
     def test_get_blog_by_site_from_post(self):
         blog_site = "sample.com"
 

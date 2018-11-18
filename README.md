@@ -63,6 +63,11 @@ docker exec -it <api_container> bash
 python manage.py test
 ```
 
+Access this endpoint, after running tests.
+```bash
+http://localhost:8091/api/stats/
+```
+
 ![Alt text](https://github.com/dineshs91/django-indexes/blob/master/stats.png?raw=true "Sample screenshot")
 
 ## TODO
