@@ -45,9 +45,10 @@ class IndexMiddleware:
             stmt = parsed[0]
 
             tokens = []
+            raw_tokens = stmt.tokens
 
             # Strip whitespaces from tokens.
-            for token in stmt.tokens:
+            for token in raw_tokens:
                 if str(token) == " ":
                     continue
                 else:
@@ -55,6 +56,11 @@ class IndexMiddleware:
 
             start_clause = tokens[0]
             end_clause = tokens[-1]
+
+            if self._query_has_inner_join(tokens):
+                pass
+            elif self._query_has_outer_join(tokens):
+                pass
 
             if not start_clause.startswith("SELECT"):
                 continue
@@ -105,3 +111,17 @@ class IndexMiddleware:
         m = re.findall(r"{}\.([a-zA-Z_]+)".format(table_name), filter_clause)
 
         return m
+
+    @staticmethod
+    def _query_has_inner_join(tokens):
+        for index, token in enumerate(tokens):
+            if token == "INNER JOIN":
+                return True
+        return False
+
+    @staticmethod
+    def _query_has_outer_join(tokens):
+        for index, token in enumerate(tokens):
+            if token == "OUTER JOIN":
+                return True
+            return False
