@@ -43,3 +43,8 @@ versions as well.
 `docker-compose up -d`
 
 Make some requests from postman, by creating the blog and its posts.
+
+## TODO
+
+- [ ] Complex joins
+- [ ] Write some tests
