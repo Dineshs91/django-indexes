@@ -34,4 +34,8 @@ class StatsView(APIView):
                 "count": value.get("count")
             })
 
+            indexes = response_data["indexes"]
+
+            response_data["indexes"] = sorted(indexes, key=lambda val: val['count'], reverse=True)
+
         return create_response(data=response_data, status=status.HTTP_200_OK)
