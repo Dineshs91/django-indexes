@@ -47,4 +47,7 @@ Make some requests from postman, by creating the blog and its posts.
 ## TODO
 
 - [ ] Complex joins
+- [ ] Nested queries
 - [ ] Write some tests
+- [ ] Analyse sql queries that django generates.
+
