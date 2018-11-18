@@ -17,6 +17,7 @@ High cardinality example: email, address, phonenumber
   - Primary key
   - Foreign key
   - Unique=True (Unique fields)
+- Ignores boolean field as it has very small cardinality.
 - Can be run from tests or in a staging server.
 
 ## Install
