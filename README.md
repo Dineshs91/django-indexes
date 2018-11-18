@@ -11,6 +11,14 @@ improvement can be gained by adding an index on such fields.
 Low cardinality example: pincode, city
 High cardinality example: email, address, phonenumber 
 
+## Features
+
+- Ignores indexes that django creates by default
+  - Primary key
+  - Foreign key
+  - Unique=True (Unique fields)
+- Can be run from tests or in a staging server.
+
 ## Install
 
 `python setup.py install`
@@ -57,4 +65,3 @@ Make some requests from postman, by creating the blog and its posts.
 - [ ] Nested queries
 - [ ] Write some tests
 - [ ] Analyse sql queries that django generates.
-
