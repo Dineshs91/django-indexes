@@ -7,7 +7,7 @@ from setuptools import setup
 
 setup(
     name='django-indexes',
-    version=version,
+    version="0.1.0",
     description=(
         'This package suggests db indexes by analysing sql queries.'
     ),
