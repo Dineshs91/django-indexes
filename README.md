@@ -35,6 +35,9 @@ Also make sure redis is running and set the env variable `REDIS_HOST`.
 
 This will work only with `APIClient`
 
+Stats can be checked from `stats.views.StatsView`. You can create an url mapping for this view and
+make a GET api call.
+
 ## Support
 
 Currently this package supports Django>2.0. But with some small changes can be made to support older
@@ -45,6 +48,8 @@ versions as well.
 `docker-compose up -d`
 
 Make some requests from postman, by creating the blog and its posts.
+
+![Alt text](https://github.com/dineshs91/django-indexes/blob/master/stats.png?raw=true "Sample screenshot")
 
 ## TODO
 
