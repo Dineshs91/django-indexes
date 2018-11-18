@@ -25,8 +25,6 @@ services:
   redis:
     image: redis
 
-
-
   db:
     image: postgres:9.6
     environment:

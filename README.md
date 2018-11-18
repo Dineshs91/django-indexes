@@ -31,6 +31,8 @@ def test_user_login(self):
     pass
 ```
 
+Also make sure redis is running and set the env variable `REDIS_HOST`.
+
 This will work only with `APIClient`
 
 ## Support
