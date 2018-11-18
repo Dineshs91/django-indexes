@@ -58,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_indexes.middleware.IndexMiddleware'
+    'core.middleware.IndexMiddleware'
 ]
 
 ROOT_URLCONF = 'djangothon.urls'

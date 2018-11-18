@@ -25,7 +25,7 @@ You can also add this to your tests.
 
 ```python
 @override_settings(MIDDLEWARE=[
-    'django_indexes.middleware.IndexMiddleware'
+    'django_indexes.core.middleware.IndexMiddleware'
 ], DEBUG=True)
 def test_user_login(self):
     pass

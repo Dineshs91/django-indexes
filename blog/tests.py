@@ -22,7 +22,7 @@ class BlogTest(TestCase):
         )
 
     @override_settings(MIDDLEWARE=[
-        'django_indexes.middleware.IndexMiddleware'
+        'core.middleware.IndexMiddleware'
     ], DEBUG=True)
     def test_create_blog(self):
         response = self.client.post('/api/blogs/', {
@@ -33,7 +33,7 @@ class BlogTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     @override_settings(MIDDLEWARE=[
-        'django_indexes.middleware.IndexMiddleware'
+        'core.middleware.IndexMiddleware'
     ], DEBUG=True)
     def test_get_blog(self):
         blog_id = Blog.objects.get(site="sample.com").id
@@ -42,7 +42,7 @@ class BlogTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     @override_settings(MIDDLEWARE=[
-        'django_indexes.middleware.IndexMiddleware'
+        'core.middleware.IndexMiddleware'
     ], DEBUG=True)
     def test_get_post(self):
         blog_id = Blog.objects.get(site="sample.com").id

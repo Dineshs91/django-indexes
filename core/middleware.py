@@ -71,6 +71,7 @@ class IndexMiddleware:
                 if value is None:
                     self.r.lpush("indexes", key)
                     self.r.set(key, json.dumps({
+                        "sql": sql_query,
                         "table": table_name,
                         "columns": valid_columns,
                         "count": 1
@@ -78,6 +79,7 @@ class IndexMiddleware:
                 else:
                     value = json.loads(value)
                     self.r.set(key, json.dumps({
+                        "sql": sql_query,
                         "table": value.get("table"),
                         "columns": value.get("columns"),
                         "count": value.get("count") + 1

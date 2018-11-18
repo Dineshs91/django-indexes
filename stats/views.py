@@ -28,6 +28,7 @@ class StatsView(APIView):
             value = json.loads(value)
 
             response_data["indexes"].append({
+                "sql": value.get("sql"),
                 "table": value.get("table"),
                 "columns": value.get("columns"),
                 "count": value.get("count")
