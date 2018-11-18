@@ -55,7 +55,12 @@ versions as well.
 
 `docker-compose up -d`
 
-Make some requests from postman, by creating the blog and its posts.
+Make some requests from postman, by creating the blog and its posts. We can also run the tests
+
+```
+docker exec -it <api_container> bash
+python manage.py test
+```
 
 ![Alt text](https://github.com/dineshs91/django-indexes/blob/master/stats.png?raw=true "Sample screenshot")
 
