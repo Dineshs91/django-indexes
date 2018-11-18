@@ -66,7 +66,6 @@ python manage.py test
 
 ## TODO
 
-- [ ] Complex joins
+- [ ] sql joins
 - [ ] Nested queries
-- [ ] Write some tests
-- [ ] Analyse sql queries that django generates.
+- [ ] Performance optimizations
